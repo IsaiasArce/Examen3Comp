@@ -6,29 +6,21 @@ import javax.persistence.*;
 
 @Entity
 public class Book {
+    private static final long serialVersionUID = 1L;
     @Id
     @Autowired
     @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private  Long id;
 
     @Column(name = "name")
     private  String name;
-    @Column(name = "child")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Child child;
     public Long getId() {
         return id;
     }
     @Column(name = "status")
     private int status ;
 
-    public Child getChild() {
-        return child;
-    }
-
-    public void setChild(Child child) {
-        this.child = child;
-    }
 
     public int getStatus() {
         return status;

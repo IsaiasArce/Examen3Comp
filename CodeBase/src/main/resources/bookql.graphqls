@@ -1,19 +1,14 @@
 type Book {
     id: ID!,
-    type: String,
-    modelCode: String,
-    brandName: String,
-    launchDate: String
+    name: String,
+    status: String
 }
 
 type Query {
-    vehicles(count: Int):[Vehicle],
-    vehicle(id: ID): Vehicle
+    books(count: Int):[Book],
+    book(id: ID): Book
 }
 
 type Mutation {
-    createVehicle(type: String!,
-        modelCode: String!,
-        brandName: String,
-        launchDate: String): Vehicle
+    createBook(name: String!):Book
 }
