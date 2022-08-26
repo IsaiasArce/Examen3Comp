@@ -1,16 +1,23 @@
 package com.cenfotec.examen.services;
 
+import com.cenfotec.examen.entities.Book;
 import com.cenfotec.examen.entities.Child;
+import com.cenfotec.examen.entities.ChildAndBook;
+import com.cenfotec.examen.repositories.BookRepository;
 import com.cenfotec.examen.repositories.ChildRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 @Service
 public class ChildServiceImpl implements  ChildService {
     @Autowired
     ChildRepository childRepo;
+    @Autowired
+    BookRepository bookRepo;
 
     @Override
     public List<Child> getAll() {
@@ -33,6 +40,28 @@ public class ChildServiceImpl implements  ChildService {
         if (record.isPresent()) {
             Child data = record.get();
             data.setName(child.getName());
+            return Optional.of(childRepo.save(data));
+        }
+        return Optional.empty();
+    }
+    @Override
+    public  Optional<Child> addBook(ChildAndBook cab) {
+        Optional<Child> record = childRepo.findById(cab.getChild().getId());
+
+        if (record.isPresent()) {
+
+            Optional<Book> bookRecord = bookRepo.findById(cab.getBook().getId());
+            Book savedBook;
+            if (!bookRecord.isPresent()){
+                savedBook= bookRepo.save(cab.getBook());
+            }else{
+                savedBook= bookRepo.getById(cab.getBook().getId());
+            }
+
+            Child data = record.get();
+            Set<Book> books= data.getBooks();
+            books.add(savedBook);
+            data.setBooks(books);
             return Optional.of(childRepo.save(data));
         }
         return Optional.empty();

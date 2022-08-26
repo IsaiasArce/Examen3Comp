@@ -1,6 +1,8 @@
 package com.cenfotec.examen.controllers;
 
+import com.cenfotec.examen.entities.Child;
 import com.cenfotec.examen.entities.Parent;
+import com.cenfotec.examen.entities.ParentAndChild;
 import com.cenfotec.examen.services.ParentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,15 @@ public class ParentsController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping(path = {"/{id}/children"})
+    public ResponseEntity<List<Child>> getChildren(@PathVariable long id){
+        List<Child>result = parentService.getChildren(id);
+        if (result!=null){
+            return ResponseEntity.ok().body(result);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PostMapping
     public Parent create(@RequestBody Parent parent){
@@ -47,6 +58,19 @@ public class ParentsController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PutMapping(value="/{id}/children/add")
+    public ResponseEntity<Parent> addChild(@PathVariable("id") long id,
+                                           @RequestBody ParentAndChild pac){
+
+        pac.getParent().setId(id);
+        Optional<Parent> result = parentService.addChild(pac);
+        if (result.isPresent()){
+            return ResponseEntity.ok().body(result.get());
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @DeleteMapping(value="/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {

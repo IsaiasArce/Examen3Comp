@@ -2,9 +2,7 @@ package com.cenfotec.examen.entities;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +11,7 @@ import java.util.Set;
 public class Parent implements Serializable {
     @Id
     @Autowired
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String phone;
@@ -20,6 +19,14 @@ public class Parent implements Serializable {
     private String secondPhone;
     @ManyToMany
     Set<Child> children;
+
+    public Set<Child> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<Child> children) {
+        this.children = children;
+    }
 
     public Parent() {
 

@@ -11,17 +11,19 @@ import java.util.Set;
 public class Child {
     @Id
     @Autowired
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String plan;
     private String alergies;
-    @ManyToMany
-    Set<Parent> parents;
     @OneToMany
-    Set<Parent> books;
+    Set<Book> books;
 
     public Long getId() {
         return id;
+    }
+
+    public Child() {
     }
 
     public void setId(Long id) {
@@ -52,19 +54,12 @@ public class Child {
         this.alergies = alergies;
     }
 
-    public Set<Parent> getParents() {
-        return parents;
-    }
 
-    public void setParents(Set<Parent> parents) {
-        this.parents = parents;
-    }
-
-    public Set<Parent> getBooks() {
+    public Set<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(Set<Parent> books) {
+    public void setBooks(Set<Book> books) {
         this.books = books;
     }
 }

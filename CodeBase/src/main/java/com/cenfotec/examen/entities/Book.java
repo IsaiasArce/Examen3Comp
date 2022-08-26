@@ -7,6 +7,10 @@ import javax.persistence.*;
 @Entity
 public class Book {
     private static final long serialVersionUID = 1L;
+
+    public Book() {
+    }
+
     @Id
     @Autowired
     @Column(name = "ID", nullable = false)
