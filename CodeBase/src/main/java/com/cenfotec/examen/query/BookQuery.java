@@ -14,13 +14,16 @@ public class BookQuery implements GraphQLQueryResolver {
     @Autowired
     private BookServiceImpl bookService;
     public List<Book> getBooks(int count) {
-        return this.bookService.getAllBooks(count);
+        return this.bookService.getBooks(count);
     }
     public Optional<Book> getBook(int id) {
         return this.bookService.findById(id);
     }
     public void updateBook(Book book) {
         bookService.updateBook(book);
+    }
+    public void deleteLogic(Long id) {
+        bookService.delete(id);
     }
     
 }

@@ -11,4 +11,7 @@ type Query {
 
 type Mutation {
     createBook(name: String!):Book
+    deleteLogic(id: ID!):Int
+    getBook(id: ID!):Book
+    getBooks(count:Int):[Book]
 }

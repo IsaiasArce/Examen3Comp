@@ -20,6 +20,10 @@ public class BooksController {
     public List getAll(){
         return bookService.getAll();
     }
+    @GetMapping(path = "/active")
+    public List getActive(){
+        return bookService.getActive();
+    }
 
     @GetMapping(path = {"/{id}"})
     public ResponseEntity<Book> findById(@PathVariable long id){

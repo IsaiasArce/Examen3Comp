@@ -53,9 +53,14 @@ public class BookServiceImpl implements   BookService{
         }
         return false;
     }
-    public List<Book> getAllBooks(int count) {
+
+    @Override
+    public List<Book> getActive() {
         return
-                this.bookRepo.findAll().stream().limit(count).collect(Collectors.toList());
+                this.bookRepo.findAllByStatusIs(1);
+    }
+    public List<Book> getBooks(int count) {
+        return   this.bookRepo.findAllByStatusIs(1).stream().limit(count).collect(Collectors.toList());
     }
     public Book createBook(String name) {
 
@@ -67,6 +72,18 @@ public class BookServiceImpl implements   BookService{
     @Override
     public List<Book> findByName(String str){
         return  bookRepo.findByNameIgnoreCaseContaining(str);
+    }
+    @Override
+    public int deleteLogic(long id){
+        Optional<Book> record = bookRepo.findById(id);
+        if (record.isPresent()) {
+            Book data = record.get();
+            data.setStatus(2);
+            bookRepo.save(data);
+            return 0;
+        }
+        return 1;
+
     }
     public void updateBook(Book bookToUpdate) {
         this.bookRepo.save(bookToUpdate);

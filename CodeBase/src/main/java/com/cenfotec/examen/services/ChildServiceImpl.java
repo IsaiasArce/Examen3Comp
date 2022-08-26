@@ -59,13 +59,16 @@ public class ChildServiceImpl implements  ChildService {
                 savedBook=bookRepo.save(cab.getBook());
                 bRecord= bookRepo.findById(savedBook.getId());
             }
+
             savedBook= bRecord.get();
+            if(savedBook.getStatus()!=2){
             Child data = record.get();
             Set<Book> books= data.getBooks();
             books.add(savedBook);
             data.setBooks(books);
 
             return Optional.of(childRepo.save(data));
+            }
         }
         return Optional.empty();
     }
