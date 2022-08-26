@@ -64,6 +64,10 @@ public class BookServiceImpl implements   BookService{
         book.setStatus(1);
         return this.bookRepo.save(book);
     }
+    @Override
+    public List<Book> findByName(String str){
+        return  bookRepo.findByNameIgnoreCaseContaining(str);
+    }
     public void updateBook(Book bookToUpdate) {
         this.bookRepo.save(bookToUpdate);
     }

@@ -1,9 +1,6 @@
 package com.cenfotec.examen.controllers;
 
-import com.cenfotec.examen.entities.Child;
-import com.cenfotec.examen.entities.ChildAndBook;
-import com.cenfotec.examen.entities.Parent;
-import com.cenfotec.examen.entities.ParentAndChild;
+import com.cenfotec.examen.entities.*;
 import com.cenfotec.examen.services.ChildService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +29,24 @@ public class ChildrenController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping(path = {"/find/{name}"})
+    public ResponseEntity <List<Child>> findById(@PathVariable String name){
+        List<Child> result = childService.findByNameIgnoreCaseContaining(name);
+        if (result!=null){
+            return ResponseEntity.ok().body(result);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping(path = {"/{id}/books"})
+    public ResponseEntity<List<Book>> getBooks(@PathVariable long id){
+        List<Book>result = childService.getBooks(id);
+        if (result!=null){
+            return ResponseEntity.ok().body(result);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PostMapping
     public Child create(@RequestBody Child child){
@@ -49,8 +64,8 @@ public class ChildrenController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PutMapping(value="/{id}/books/add")
-    public ResponseEntity<Child> addChild(@PathVariable("id") long id,
+    @PutMapping(value="/{id}/books")
+    public ResponseEntity<Child> addBook(@PathVariable("id") long id,
                                            @RequestBody ChildAndBook cab){
 
         cab.getChild().setId(id);

@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface ParentService {
     public List<Parent> getAll();
+    public List<Parent> findByName(String str);
     public List<Child> getChildren(long id);
     public Optional<Parent> findById(long id);
     public Optional<Parent> save(Parent parent);

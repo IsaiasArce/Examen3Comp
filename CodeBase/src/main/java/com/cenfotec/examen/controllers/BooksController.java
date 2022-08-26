@@ -1,6 +1,7 @@
 package com.cenfotec.examen.controllers;
 
 import com.cenfotec.examen.entities.Book;
+import com.cenfotec.examen.entities.Parent;
 import com.cenfotec.examen.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,15 @@ public class BooksController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    @GetMapping(path = {"/find/{name}"})
+    public ResponseEntity <List<Book>> findById(@PathVariable String name){
+        List<Book> result = bookService.findByName(name);
+        if (result!=null){
+            return ResponseEntity.ok().body(result);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @DeleteMapping(value="/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {

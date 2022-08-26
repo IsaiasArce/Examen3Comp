@@ -79,11 +79,15 @@ public class ParentServiceImpl implements ParentService {
     public  List<Child> getChildren(long id) {
         Optional<Parent> result = parentRepo.findById(id);
         if (result.isPresent()) {
-            return new ArrayList<Child>(result.get().getChildren());
+            return new ArrayList<>(result.get().getChildren());
         }
         return null;
 
 
+    }
+    @Override
+    public  List<Parent> findByName(String str) {
+        return  parentRepo.findByNameIgnoreCaseContaining(str);
     }
     @Override
     public boolean delete(Long id) {

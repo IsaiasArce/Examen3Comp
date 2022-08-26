@@ -41,6 +41,15 @@ public class ParentsController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping(path = {"/find/{name}"})
+    public ResponseEntity <List<Parent>> findById(@PathVariable String name){
+        List<Parent> result = parentService.findByName(name);
+        if (result!=null){
+            return ResponseEntity.ok().body(result);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PostMapping
     public Parent create(@RequestBody Parent parent){
